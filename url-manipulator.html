@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL Manipulation Tool</title>
+</head>
+
+<body>
+  <h2>Form URL Manipulation Tool</h2>
+
+  <!-- 
+    1. location.assign(url)
+      + Sang URL mới: Yes
+      + Lưu trong history: Yes
+      + Quay lại bằng Back: Yes
+  -->
+
+  <!-- 
+    2. location.replace(url)
+      + Sang URL mới: Yes
+      + Lưu trong history: No
+      + Quay lại bằng Back:No
+  -->
+
+  <!-- 
+    3. location.reload()
+      + Sang URL mới: Tải lại URL hiện tại
+      + Lưu trong history:  Không đổi URL
+      + Quay lại bằng Back: Không cần
+  -->
+
+  <form action="" id="form">
+    <div class="form-group">
+      <label for="">
+        Protocol:
+      </label>
+      <select name="protocol">
+        <option value="http:">http:</option>
+        <option value="https:">https:</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="">
+        Hostname:
+      </label>
+      <input id="hostname" type="text" name="hostname" placeholder="Enter hostname">
+    </div>
+
+    <div class="form-group">
+      <label for="">
+        Port:
+      </label>
+      <input type="text" name="port" placeholder="Enter port">
+    </div>
+
+    <div class="form-group">
+      <label for="">
+        Pathname:
+      </label>
+      <input type="text" name="pathname" placeholder="Enter pathname">
+    </div>
+
+    <div class="form-group">
+      <label for="">
+        Search/Query:
+      </label>
+      <input type="text" name="search" placeholder="Enter search">
+    </div>
+
+    <div class="form-group">
+      <label for="">
+        Hash:
+      </label>
+      <input type="text" name="hash" placeholder="Enter hash">
+    </div>
+
+    <div class="form-group">
+      <button id="navigate">Navigate</button>
+      <button id="replace">Replace</button>
+      <button id="reload">Reload</button>
+    </div>
+  </form>
+
+  <script>
+    const form = document.querySelector("#form");
+    const navigateBtn = document.querySelector("#navigate");
+    const replaceBtn = document.querySelector("#replace");
+    const reloadBtn = document.querySelector("#reload");
+
+    const protocol = document.querySelector("[name='protocol']");
+    const hostname = document.querySelector("#hostname");
+    const port = document.querySelector("[name='port']");
+    const pathname = document.querySelector("[name='pathname']");
+    const search = document.querySelector("[name='search']");
+    const hash = document.querySelector("[name='hash']");
+
+    function getAllFormValue() {
+      const protocolValue = protocol.value;
+      const hostnameValue = hostname.value;
+      const portValue = port.value;
+      const pathnameValue = pathname.value;
+      const searchValue = search.value;
+      const hashValue = hash.value;
+      return {
+        protocolValue,
+        hostnameValue,
+        portValue,
+        pathnameValue,
+        searchValue,
+        hashValue
+      }
+    }
+
+    function mapUrl() {
+      const allFormValue = getAllFormValue();
+
+      const {
+        protocolValue,
+        hostnameValue,
+        portValue,
+        pathnameValue,
+        searchValue,
+        hashValue
+      } = allFormValue
+
+      if (hostnameValue.trim() === '') {
+        return;
+      }
+
+      const url = `${protocolValue}//${hostnameValue}:${portValue}/${pathnameValue}${searchValue}${hashValue}`;
+      return url
+    }
+
+    navigateBtn.addEventListener("click", function(e) {
+      e.preventDefault();
+      const url = mapUrl();
+      window.location.assign(url)
+    });
+
+    replaceBtn.addEventListener("click", function(e) {
+      e.preventDefault();
+      const url = mapUrl();
+      window.location.replace(url)
+    });
+
+    reloadBtn.addEventListener("click", function(e) {
+      e.preventDefault();
+      window.location.reload()
+    });
+  </script>
+</body>
+
+</html>
