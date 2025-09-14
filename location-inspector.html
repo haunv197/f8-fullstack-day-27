@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Location Properties Inspector</title>
+  <link rel="stylesheet" href="./location-inspector.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+    }
+
+    h2 {
+      margin-bottom: 2rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .main {
+      margin: 2rem auto;
+      max-width: 80%;
+    }
+
+    .text-primary {
+      color: rgb(191, 0, 255);
+    }
+
+    th {
+      font-weight: b;
+    }
+
+    th,
+    td {
+      border: 1px solid rgb(205, 69, 16);
+      padding: 0.5rem 1rem;
+    }
+
+    .name {
+      width: 150px;
+    }
+
+    .value {
+      width: 500px;
+    }
+
+    .description {
+      width: 300px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="main">
+    <h2>Tất cả thuộc tính của <b class="text-primary">window.location</b></h2>
+    <table class="table" id="table">
+      <thead>
+        <tr>
+          <th class="name">Property Name</th>
+          <th class="value">Current Value</th>
+          <th class="description">Description</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <script>
+    const {
+      href,
+      protocol,
+      hostname,
+      port,
+      pathname,
+      search,
+      hash,
+      origin
+    } =
+    window.location;
+
+    const locationArr = [{
+      name: 'href',
+      value: href,
+      description: 'URL đầy đủ hiện tại'
+    }, {
+      name: 'protocol',
+      value: protocol,
+      description: 'Giao thức đang sử dụng (http: hoặc https:)'
+    }, {
+      name: 'hostname',
+      value: hostname,
+      description: 'Tên miền (ví dụ: google.com)'
+    }, {
+      name: 'port',
+      value: port,
+      description: 'Số cổng (ví dụ: 3000, 8080, hoặc rỗng nếu là cổng mặc định)'
+    }, {
+      name: 'search',
+      value: search,
+      description: 'Phần query string bao gồm dấu ? (ví dụ: ?id=123&name=abc)'
+    }, {
+      name: 'hash',
+      value: hash,
+      description: '- Phần fragment identifier bao gồm dấu # (ví dụ: #section1)'
+    }, {
+      name: 'origin',
+      value: origin,
+      description: 'Origin của URL (protocol + hostname + port)'
+    }, ]
+
+    const bodyTable = document.querySelector("#table tbody")
+
+    bodyTable.innerHTML = locationArr.map(location => {
+      return (`<tr>
+        <td><b>${location.name}</b></td>
+        <td>${location.value}</td>
+        <td>${location.description}</td>
+        </tr>`)
+    }).join("");
+  </script>
+</body>
+
+</html>
