@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Single Page Navigation</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+    }
+
+    body {
+      font-family: "Roboto", sans-serif;
+      text-align: justify;
+      font-size: 14px;
+    }
+
+    .text-none-justify {
+      text-align: start;
+    }
+
+    /* menu-home-page */
+    .container {
+      max-width: 1200px;
+      padding: 0 16px;
+      margin: 0 auto;
+    }
+
+    .menu-home-page {
+      background-color: #1ed5b9;
+    }
+
+    .menu-home-page ul {
+      display: flex;
+      list-style: none;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .menu-home-page ul li a {
+      background-color: #1ed5b9;
+      color: #fff;
+      padding: 12px 20px;
+      text-decoration: none;
+      display: inline-block;
+      font-weight: bold;
+    }
+
+    .menu-home-page ul li a.active {
+      background-color: #fff;
+      color: #1ed5b9;
+    }
+
+    .menu-home-page li a:hover {
+      background-color: #fff;
+      color: #1ed5b9;
+    }
+
+    .content-page {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      font-size: 20px;
+      padding: 2.5rem;
+      min-height: 40vh;
+    }
+
+    .text-show-history {
+      margin: 2rem;
+      text-align: center;
+      font-size: 20px;
+    }
+
+    .show-history-length {
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="header menu-home-page">
+      <div class="container">
+        <div class="inner">
+          <ul id="pageList">
+            <li><a href="?page=home" id="1" class="active">Home</a></li>
+            <li><a href="?page=about" id="2">About</a></li>
+            <li><a href="?page=services" id="3">Services</a></li>
+            <li><a href="?page=contact" id="4">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="content-page" class="content-page">
+      Chào mừng đến với trang chủ! Đây là nội dung của trang Home
+    </div>
+    <p class="text-show-history">
+      History Length: <span class="show-history-length">0</span>
+    </p>
+  </div>
+
+  <script>
+    const pageList = document.querySelector("#pageList");
+    const contentPage = document.querySelector("#content-page");
+    const showHistoryElement = document.querySelector(".show-history-length");
+
+    const contentPageData = [{
+        id: 1,
+        page: 'home',
+        content: 'Chào mừng đến với trang chủ! Đây là nội dung của trang Home'
+      },
+      {
+        id: 2,
+        page: 'about',
+        content: 'Thông tin về chúng tôi. Chúng tôi là công ty chuyên về công nghệ web'
+      },
+      {
+        id: 3,
+        page: 'services',
+        content: '"Các dịch vụ của chúng tôi: Thiết kế web, Lập trình ứng dụng, Tư vấn công nghệ.'
+      },
+      {
+        id: 4,
+        page: 'contact',
+        content: 'Liên hệ với chúng tôi: Email: contact@example.com, Phone: 0123456789'
+      },
+    ]
+
+    const pageCurrentOnUrl = window.location.search.slice(6); //vd: ?page=home -> slice(6) -> home
+
+    function updateActiveLink(id) {
+      if (!id) return;
+
+      pageList.querySelectorAll("li a").forEach(link => {
+        link.classList.remove("active");
+        if (link.getAttribute("id") === id) {
+          link.classList.add("active");
+        }
+      });
+    }
+
+    function loadData() {
+      const pageCurrent = contentPageData.find(item => pageCurrentOnUrl.includes(item.page))
+      if (!pageCurrent) return;
+
+      const {
+        id,
+        content
+      } = pageCurrent;
+
+      contentPage.innerHTML = content;
+      updateActiveLink(id?.toString());
+    }
+
+    function showHistoryLength() {
+      showHistoryElement.innerHTML = history.length;
+    }
+
+    loadData();
+    showHistoryLength();
+
+    pageList.addEventListener("click", function(e) {
+      e.preventDefault();
+      const link = e.target.closest("li a");
+      if (!link) {
+        return;
+      }
+
+      const href = link.getAttribute("href");
+      const id = link.getAttribute("id");
+      const contentData = contentPageData.find(item => item.id === +id)?.content;
+      contentPage.innerHTML = contentData;
+
+      updateActiveLink(id);
+      showHistoryLength();
+
+      history.pushState({
+        page: `${window.location.pathname}${href}`,
+        id: id,
+        content: contentData
+      }, "", `${window.location.pathname}${href}`);
+    });
+
+    window.addEventListener("popstate", function(event) {
+      const contentData = event.state.content;
+      contentPage.innerHTML = contentData;
+
+      updateActiveLink(event.state?.id);
+      showHistoryLength();
+    });
+  </script>
+</body>
+
+</html>
