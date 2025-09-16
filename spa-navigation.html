@@ -103,6 +103,7 @@
   </div>
 
   <script>
+    // init Dom
     const pageList = document.querySelector("#pageList");
     const contentPage = document.querySelector("#content-page");
     const showHistoryElement = document.querySelector(".show-history-length");
@@ -129,8 +130,9 @@
       },
     ]
 
-    const pageCurrentOnUrl = window.location.search.slice(6); //vd: ?page=home -> slice(6) -> home
+    const pageCurrentOnUrl = window.location.search.slice(6); //eg: ?page=home -> slice(6) -> home
 
+    // update active menu page
     function updateActiveLink(id) {
       if (!id) return;
 
@@ -142,6 +144,7 @@
       });
     }
 
+    // update active menu page, update content when init 
     function loadData() {
       const pageCurrent = contentPageData.find(item => pageCurrentOnUrl.includes(item.page))
       if (!pageCurrent) return;
@@ -162,6 +165,7 @@
     loadData();
     showHistoryLength();
 
+    // Click link -> change data, active
     pageList.addEventListener("click", function(e) {
       e.preventDefault();
       const link = e.target.closest("li a");
@@ -184,6 +188,7 @@
       }, "", `${window.location.pathname}${href}`);
     });
 
+    // back/forward make save data
     window.addEventListener("popstate", function(event) {
       const contentData = event.state.content;
       contentPage.innerHTML = contentData;
