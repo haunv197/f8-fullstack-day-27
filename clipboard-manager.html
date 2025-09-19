@@ -62,10 +62,8 @@
       <button id="btnCopy">Copy</button>
     </div>
 
-
-
     <div class="textareaItem">
-      <textarea name="textareaPaste" id="textareaPaste" disabled placeholder="Nội dung sẽ hiện thị sau sau paste"></textarea>
+      <textarea name="textareaPaste" id="textareaPaste" disabled placeholder="Nội dung sẽ hiện thị sau khi paste"></textarea>
       <button id="btnPaste">Paste</button>
     </div>
   </div>
@@ -78,7 +76,6 @@
 
     btnCopy.addEventListener("click", function() {
       navigator.clipboard.writeText(textareaCopy.value)
-      // console.log(navigator.clipboard.writeText());
     })
 
     btnPaste.addEventListener("click", function() {
