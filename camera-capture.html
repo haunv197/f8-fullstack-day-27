@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Camera Capture App
+  </title>
+  <style>
+    body {
+      margin: 2rem 0;
+    }
+
+    h2 {
+      margin-top: 0;
+    }
+
+    .video-image {
+      display: flex;
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      margin-bottom: 2rem;
+      padding: 0 1rem;
+    }
+
+    .videoWrapper,
+    .imgWrapper {
+      flex: 0 0 50%;
+      flex-shrink: 1;
+    }
+
+    .videoContainer,
+    .imgContainer {
+      padding-top: calc(600/900 *100%);
+      background-color: #000;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .imgContainer {
+      background-color: #ccc;
+    }
+
+    video,
+    img {
+      position: absolute;
+      inset: 0;
+      object-fit: cover;
+      object-position: center;
+      width: 100%;
+    }
+
+
+
+    .btnList {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    button {
+      display: inline-block;
+      font-size: 18px;
+      padding: 0.75rem 1rem;
+      background-color: #000;
+      color: #fff;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+      border: none;
+    }
+
+    button:hover {
+      background-color: rgb(220, 82, 7);
+    }
+  </style>
+</head>
+
+<body>
+
+
+  <div class="video-image">
+    <div class="videoWrapper">
+      <h2>Video Stream</h2>
+      <div class="videoContainer">
+        <video src="" autoplay id="video"></video>
+      </div>
+    </div>
+
+    <div class="imgWrapper">
+      <h2>Camera Capture</h2>
+
+      <div class="imgContainer">
+        <img id="img">
+      </div>
+    </div>
+  </div>
+
+  <div class="btnList">
+    <button id="btnStartCamera">
+      Start Camera
+    </button>
+
+    <button id="btnStopCamera">
+      Stop Camera
+    </button>
+
+    <button id="btnTakePhoto">
+      Take Photo
+    </button>
+
+    <button id="btnDownloadPhoto">
+      Download Photo
+    </button>
+
+  </div>
+  <script>
+    const constraints = {
+      audio: true,
+      video: {
+        width: 900,
+        height: 600
+      },
+    };
+    const btnStartCamera = document.querySelector("#btnStartCamera");
+    const btnStopCamera = document.querySelector("#btnStopCamera");
+    const btnTakePhoto = document.querySelector("#btnTakePhoto");
+    const btnDownloadPhoto = document.querySelector("#btnDownloadPhoto");
+    const video = document.querySelector("#video");
+    const imgTag = document.querySelector("#img");
+    const canvas = document.createElement("canvas");
+
+    canvas.width = 900;
+    canvas.height = 600;
+
+    let stream = "";
+    // star camera
+    btnStartCamera.addEventListener("click", function() {
+      navigator.mediaDevices.getUserMedia(constraints).then(function(mediaStream) {
+        stream = mediaStream;
+        video.srcObject = stream;
+        video.onloadedmetadata = () => {
+          video.play();
+        };
+      }).catch((err) => {
+        // always check for errors at the end.
+        console.error(`${err.name}: ${err.message}`);
+      });;
+    })
+
+    btnStopCamera.addEventListener("click", function() {
+      stream.getTracks().forEach(track => track.stop());
+      return;
+    })
+
+
+    btnTakePhoto.addEventListener("click", () => {
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      const image = canvas.toDataURL("image/jpeg");
+      imgTag.src = image;
+    });
+
+    btnDownloadPhoto.addEventListener("click", function() {
+      // Tạo element <a> để download
+      const link = document.createElement('a');
+      // Đặt tên file download
+      link.download = 'photo.png';
+      // Chuyển canvas thành data URL để tạo link download
+      link.href = canvas.toDataURL();
+      // Tự động click để trigger download
+      link.click();
+    })
+  </script>
+</body>
+
+</html>
