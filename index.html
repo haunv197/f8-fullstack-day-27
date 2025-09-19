@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Single Page Navigation</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+    }
+
+    body {
+      font-family: "Roboto", sans-serif;
+      text-align: justify;
+      font-size: 14px;
+    }
+
+    .text-none-justify {
+      text-align: start;
+    }
+
+    /* menu-home-page */
+    .container {
+      max-width: 1200px;
+      padding: 0 16px;
+      margin: 0 auto;
+    }
+
+    .menu-home-page {
+      background-color: #1ed5b9;
+    }
+
+    .menu-home-page ul {
+      display: flex;
+      list-style: none;
+      justify-content: center;
+      width: 100%;
+      padding: 0;
+    }
+
+    .menu-home-page ul li a {
+      background-color: #1ed5b9;
+      color: #fff;
+      padding: 12px 20px;
+      text-decoration: none;
+      display: inline-block;
+      font-weight: bold;
+    }
+
+    .menu-home-page ul li a.active {
+      background-color: #fff;
+      color: #1ed5b9;
+    }
+
+    .menu-home-page li a:hover {
+      background-color: #fff;
+      color: #1ed5b9;
+    }
+
+    .content-page {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      font-size: 20px;
+      padding: 2.5rem;
+      min-height: 40vh;
+    }
+
+    .text-show-history {
+      margin: 2rem;
+      text-align: center;
+      font-size: 20px;
+    }
+
+    .show-history-length {
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="header menu-home-page">
+      <div class="container">
+        <div class="inner">
+          <ul id="pageList">
+            <li><a href="/f8-fullstack-day-27/location-inspector.html">1.1 Location Properties Inspector</a></li>
+            <li><a href="/f8-fullstack-day-27/url-manipulator.html">1.2. URL Manipulation Tool</a></li>
+            <li><a href="/f8-fullstack-day-27/spa-navigation.html">2.1. Single Page Navigation</a></li>
+            <li><a href="/f8-fullstack-day-27/clipboard-manager.html">3.1. Clipboard Manager</a></li>
+            <li><a href="/f8-fullstack-day-27/camera-capture.html">3.2. Camera Capture Ap</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
