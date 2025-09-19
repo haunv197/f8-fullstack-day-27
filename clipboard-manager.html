@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clipboard Manager</title>
+  <style>
+    body {
+      margin: 0 auto;
+    }
+
+    .textareaWrapper {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .textareaItem {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+
+    }
+
+    textarea {
+      height: 200px;
+      width: 300px;
+      padding: 0.75rem;
+      outline: none;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+
+    button {
+      width: 150px;
+      font-size: 18px;
+      padding: 0.5rem 0.75rem;
+      background-color: #000;
+      color: #fff;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: 0.3s;
+      border: none;
+    }
+
+    button:hover,
+    #btnPaste {
+      background-color: rgb(220, 82, 7);
+    }
+  </style>
+</head>
+
+<body>
+  <h2>3.1. Clipboard Manager</h2>
+  <div class="textareaWrapper">
+    <div class="textareaItem">
+      <textarea name="textareaCopy" id="textareaCopy" placeholder="Nhập nội dung cần copy ..."></textarea>
+      <button id="btnCopy">Copy</button>
+    </div>
+
+
+
+    <div class="textareaItem">
+      <textarea name="textareaPaste" id="textareaPaste" disabled placeholder="Nội dung sẽ hiện thị sau sau paste"></textarea>
+      <button id="btnPaste">Paste</button>
+    </div>
+  </div>
+
+  <script>
+    const btnCopy = document.querySelector("#btnCopy");
+    const btnPaste = document.querySelector("#btnPaste");
+    const textareaCopy = document.querySelector("#textareaCopy");
+    const textareaPaste = document.querySelector("#textareaPaste");
+
+    btnCopy.addEventListener("click", function() {
+      navigator.clipboard.writeText(textareaCopy.value)
+      // console.log(navigator.clipboard.writeText());
+    })
+
+    btnPaste.addEventListener("click", function() {
+      navigator.clipboard.readText().then(function(resolve) {
+        textareaPaste.value = resolve;
+      });
+    })
+  </script>
+</body>
+
+</html>
