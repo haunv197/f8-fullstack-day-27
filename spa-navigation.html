@@ -130,8 +130,7 @@
       },
     ]
 
-    const pageCurrentOnUrl = window.location.search.slice(6); //eg: ?page=home -> slice(6) -> home
-
+    const pageCurrentOnUrl = new URLSearchParams(window.location.search).get("page"); //eg: ?page=home -> slice(6) -> home
     // update active menu page
     function updateActiveLink(id) {
       if (!id) return;
