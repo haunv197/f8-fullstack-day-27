@@ -5,6 +5,41 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>URL Manipulation Tool</title>
+  <style>
+    .form-group {
+      display: flex;
+      margin-bottom: 0.5rem;
+      gap: 20px
+    }
+
+    label {
+      font-size: 18px;
+      display: inline-block;
+      min-width: 120px;
+    }
+
+    input,
+    select {
+      padding: 0.25rem 0.5rem;
+      border-radius: 3px;
+      outline: none;
+      border: 1px solid #ccc;
+      font-size: 16px;
+      width: 250px;
+      max-width: 250px;
+    }
+
+    button {
+      background-color: #000;
+      color: #fff;
+      padding: 0.5rem 0.75rem;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      ;
+    }
+  </style>
 </head>
 
 <body>
@@ -136,12 +171,22 @@
 
     navigateBtn.addEventListener("click", function(e) {
       e.preventDefault();
+
+      if (!hostname.value.trim()) {
+        alert("Hay nhap Hostname!");
+        return;
+      }
       const url = mapUrl();
       window.location.assign(url)
     });
 
     replaceBtn.addEventListener("click", function(e) {
       e.preventDefault();
+
+      if (!hostname.value.trim()) {
+        alert("Hay nhap Hostname!");
+        return;
+      }
       const url = mapUrl();
       window.location.replace(url)
     });
